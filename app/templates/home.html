@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3 shadow-sm">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="{{ url_for('main.home') }}">🌟 My Portfolio</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('main.home') }}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('main.about') }}">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('main.projects') }}">Projects</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('main.contact') }}">Contact</a>
+        </li>
+        {% if current_user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link text-danger" href="{{ url_for('main.logout') }}">Logout</a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="bg-light py-5 text-center">
+  <div class="container">
+    <h1 class="display-4 fw-bold">Welcome to My Portfolio</h1>
+    <p class="lead text-muted">I'm building cool stuff using Flask, Python, and modern web tech.</p>
+    <a href="{{ url_for('main.projects') }}" class="btn btn-primary btn-lg mt-3">View My Work</a>
+  </div>
+</section>
+
+<!-- Highlights Section -->
+<section class="container py-5">
+  <div class="row text-center">
+    <div class="col-md-4">
+      <h3>💡 Innovative</h3>
+      <p>I love solving real-world problems with clean and creative solutions.</p>
+    </div>
+    <div class="col-md-4">
+      <h3>🧑‍💻 Skilled</h3>
+      <p>Experienced with Flask, Django, SQL, APIs, JavaScript, and more.</p>
+    </div>
+    <div class="col-md-4">
+      <h3>🚀 Reliable</h3>
+      <p>Committed to quality work and meeting deadlines with excellence.</p>
+    </div>
+  </div>
+</section>
+{% endblock %}

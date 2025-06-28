@@ -1,0 +1,104 @@
+how to start a flask project 
+1 create a file structure
+2 create a app folder covers all files and folder except config file and run file
+
+create __init__file in app and a forms and models file templates and static folder
+ 
+create a main folder inside app consist of init and routes files
+
+always first create templates and basic rotes for them for testing
+
+then create models
+
+then forms:
+        from flask_sqlalchemy import SQLAlchemy
+        from flask_login import UserMixin
+        from werkzeug.security import generate_password_hash,check_password_hash
+
+        from app import db
+
+
+        class User(db.Model, UserMixin):
+            __tablename__ = 'users'
+
+            id = db.Column(db.Integer, primary_key=True)
+            username = db.Column(db.String(150), unique=True, nullable=False)
+            password_hash = db.Column(db.String(200), nullable=False)
+
+            def set_password(self, password):
+                self.password_hash = generate_password_hash(password)
+
+            def check_password(self, password):
+                return check_password_hash(self.password_hash, password)
+
+            def __repr__(self):
+                return f"<User {self.username}>"
+
+create forms(like login or register):
+        from flask_wtf import FlaskForm
+        from wtforms import StringField,PasswordField,SubmitField
+        from wtforms.validators import DataRequired,Length
+
+        class LoginForm(FlaskForm):
+            username=StringField('Name',validators=[DataRequired()])
+            password=PasswordField('password',validators=[DataRequired(),Length(min=6)])
+            submit=SubmitField('submit')
+
+always use blueprints
+
+and at last update templates files and also update routes:
+        from flask import Blueprint, render_template, redirect, url_for, flash
+        from flask_login import login_user, current_user, login_required,logout_user
+        from app.models import User
+        from app.forms import LoginForm
+
+        main = Blueprint('main', __name__)
+
+        @main.route('/')
+        @login_required
+        def home():
+            return render_template('home.html')
+
+        @main.route('/about')
+        def about():
+            return render_template('about.html')
+
+        @main.route('/contact')
+        def contact():
+            return render_template('contact.html')
+
+        @main.route('/projects')
+        def projects():
+            return render_template('projects.html')
+
+        @main.route('/login', methods=['GET', 'POST'])
+        def login():
+            if current_user.is_authenticated:
+                return redirect(url_for('main.home'))  # ✅ Fixed
+
+            form = LoginForm()
+            if form.validate_on_submit():
+                user = User.query.filter_by(username=form.username.data).first()
+                if user and user.check_password(form.password.data):
+                    login_user(user)
+                    return redirect(url_for('main.home'))  # ✅ Fixed
+                else:
+                    flash('Invalid username or password', 'danger')
+            return render_template('login.html', form=form)
+
+        @main.route('/logout')
+        def logout():
+            logout_user()
+            flash("you have been logout",'info')
+            return redirect(url_for('main.login'))
+
+to add register in any flask app 
+A HTML form for the user to input details like username, email, and password.
+
+A Flask route to handle the form submission.
+
+(Optional but recommended) A database to store user data securely.
+
+Password hashing for security.
+
+thanks thats it !!

@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block content %}
+ 
+<style>
+    body {
+      background: linear-gradient(to right, #2575fc, #6a11cb);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 400px;
+      background: white;
+      padding: 2.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .form-label i {
+      color: #2575fc;
+    }
+
+    .btn-primary {
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(to right, #2575fc, #6a11cb);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-card">
+    <h3 class="text-center mb-4 fw-bold">🔐 Login</h3>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <!-- Login Form -->
+    <form method="POST">
+      {{ form.hidden_tag() }}
+
+      <div class="mb-3">
+        <label class="form-label">
+          <i class="bi bi-person-fill me-1"></i> Username
+        </label>
+        {{ form.username(class="form-control form-control-lg", placeholder="Enter your username") }}
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label">
+          <i class="bi bi-lock-fill me-1"></i> Password
+        </label>
+        {{ form.password(class="form-control form-control-lg", placeholder="Enter your password") }}
+      </div>
+
+      <div class="d-grid mb-3">
+        {{ form.submit(class="btn btn-primary btn-lg") }}
+      </div>
+
+      <div class="text-center">
+        <small>Don't have an account? <a href="{{ url_for('main.register') }}">Register here</a></small>
+      </div>
+    </form>
+  </div>
+
+{% endblock %}

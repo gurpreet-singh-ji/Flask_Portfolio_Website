@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+  .fixed-img {
+    height: 200px;
+    object-fit: cover;
+  }
+</style>
+
+<div class="container mt-5">
+  <h2>My Projects</h2>
+  <div class="row mt-4">
+
+    <!-- Project 1 -->
+    <div class="col-md-4 mb-3 d-flex">
+      <div class="card h-100 shadow-sm w-100">
+        <img src="{{ url_for('static', filename='django jpg.jpg') }}" class="card-img-top fixed-img" alt="Project 1">
+        <div class="card-body">
+          <h5 class="card-title">Project One</h5>
+          <p class="card-text">A simple web app built using Flask and Bootstrap.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project 2 -->
+    <div class="col-md-4 mb-3 d-flex">
+      <div class="card h-100 shadow-sm w-100">
+        <img src="{{ url_for('static', filename='header.png') }}" class="card-img-top fixed-img" alt="Project 2">
+        <div class="card-body">
+          <h5 class="card-title">Project Two</h5>
+          <p class="card-text">A REST API project built with Flask-RESTful.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project 3 -->
+    <div class="col-md-4 mb-3 d-flex">
+      <div class="card h-100 shadow-sm w-100">
+        <img src="{{ url_for('static', filename='python-flask-django.png') }}" class="card-img-top fixed-img" alt="Project 3">
+        <div class="card-body">
+          <h5 class="card-title">Project Three</h5>
+          <p class="card-text">A blog CMS with admin panel and database support.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
